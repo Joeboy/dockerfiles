@@ -1,0 +1,17 @@
+{
+    "driver":  "mongodb",
+    "params":  {"dbname": "pumpio", "host":"127.0.0.1", "port":27017},
+    "secret":  "my dog has fleas",
+    "noweb":  false,
+    "site":  "My pump.io site",
+    "owner":  "My name",
+    "ownerURL":  "http://my-website.com/",
+    "port":  80,
+    "hostname":  "localhost",
+    "address":  "0.0.0.0",
+    "nologger":  false,
+    "serverUser":  "root",
+    "uploaddir": "/var/local/pump.io/uploads",
+    "debugClient": false,
+    "firehose": "ofirehose.example"
+}

@@ -1,0 +1,12 @@
+[program:mongodb]
+command=/usr/bin/mongod
+numprocs=1
+autostart=true
+autorestart=true
+
+[program:node]
+command=/usr/bin/node /pumpio/src/bin/pump
+numprocs=1
+directory=/pumpio/src
+autostart=true
+autorestart=true
