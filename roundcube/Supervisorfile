@@ -1,0 +1,11 @@
+[program:mysql]
+command=/usr/sbin/mysqld
+numprocs=1
+autostart=true
+autorestart=true
+
+[program:apache]
+command=/usr/sbin/apache2
+numprocs=1
+autostart=true
+autorestart=true
