@@ -1,10 +1,11 @@
 Dockerfiles
 ===========
 
-Some config files for building docker.io images. The general intention is to
-make it easier to move away from centralized services like Facebook, Gmail et
-al. Docker allows you to (relatively) easily run services in isolated
-containers on cheap hosts. So far there are docker files for:
+This repository contains config files for building docker.io images. The
+general intention is to make it easier to move away from centralized services
+like Facebook, Gmail et al. Docker allows you to (relatively) easily run
+services in isolated containers on cheap hosts. So far the repo contains docker
+files for:
 
 * http://pump.io/ - federated social network
 * http://roundcube.net - webmail client
@@ -51,11 +52,11 @@ Running your image
 
 ::
 
-    docker run -p 80:80 roundcube
+    docker run -p 8000:80 roundcube
 
-The -p argument means "redirect port 80 on the host to port 80 in the container".
+The -p argument means "redirect port 8000 on the host to port 80 in the container".
 
-You should now be able to access roundcube at http://localhost/roundcube/
+You should now be able to access roundcube at http://localhost:8000/roundcube/
 
 
 Is that it?
@@ -98,8 +99,8 @@ You probably want to build / run your image on a server rather than your local
 PC. Fortunately hosting requirements are not too onerous. You could either host
 it on a dedicated box or a cheap VPS. See http://www.lowendbox.com/ for deals on
 VPSes. You should be OK with any x64 host that supports Ubuntu 13.04, although I
-can't guarantee anything. You should easily be able to find something in the
-"few bucks a month" range.
+can't guarantee anything. You should easily be able to find something beefy
+enough to handle a few docker containers in the "few bucks a month" range.
 
 See also:
 
@@ -110,7 +111,30 @@ See also:
 Proxying from the host to the docker container
 ##############################################
 
-TODO: nginx shizzle
+If you're running more than one containerized web app, you'll want to proxy
+requests to the host to the container. One fairly straightforward way of doing
+this is with nginx:
+
+::
+
+    apt-get install nginx
+
+You'll want to amend ``/etc/nginx/sites-available/default`` with something like
+this:
+
+::
+
+    server {
+        listen      80;
+        location /roundcube/ {
+            proxy_pass http://127.0.0.1:8000;
+        }
+    }
+
+That'll pass requests to the host on port 80 to port 8000, which is hopefully
+the port we're passing onto the roundcube container (see the -p flag to
+``docker run`` above).
+
 
 
 SSL 
