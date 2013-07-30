@@ -1,11 +1,12 @@
 Dockerfiles
 ===========
 
-This repository contains config files for building docker.io images. The
-general intention is to make it easier to move away from centralized services
-like Facebook, Gmail et al. Docker allows you to (relatively) easily run
-services in isolated containers on cheap hosts. So far the repo contains docker
-files for:
+This repository contains config files for building docker.io images. These
+files are intended as a starting point for creating your own customized images.
+The general intention is to make it easier to move away from centralized
+services like Facebook, Gmail et al. Docker allows you to (relatively) easily
+run services in isolated containers on cheap hosts. So far the repo contains
+docker files for:
 
 * http://pump.io/ - federated social network
 * http://roundcube.net - webmail client
@@ -72,24 +73,6 @@ Configuration
 The supplied configurations are minimal and inadequate. You should make sure
 you edit the supplied files to suit your needs before building your image. Pay
 particular attention to passwords / encryption keys.
-
-Once you've built your image, you can do further configuration as follows::
-
-    > docker run -t -i roundcube /bin/bash
-    > (make changes)
-    > exit
-    > docker ps -a
-    ID                  IMAGE               COMMAND                CREATED             STATUS              PORTS
-    793a80f9a1e4        roundcube:latest    /bin/bash              31 seconds ago      Exit 0
-    > docker commit 793a80f9a1e4
-    0633b03960c9
-    docker tag 0633b03960c9 roundcube
-
-This will create a new roundcube image with whatever changes you made. However
-it will also remove the default command, so in future you'll need to specify
-the command to run when running the image.
-
-(There must surely be some better way of doing this that I haven't thought of?)
 
 
 Hosting your docker image
