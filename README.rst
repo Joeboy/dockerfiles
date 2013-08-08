@@ -10,6 +10,7 @@ docker files for:
 
 * http://pump.io/ - federated social network
 * http://roundcube.net - webmail client
+* http://owncloud.org - online file storage  / dropbox replacement
 
 Feel free to raise a ticket if there's anything else you'd particularly like
 to see dockerized.
