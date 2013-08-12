@@ -8,9 +8,10 @@ services like Facebook, Gmail et al. Docker allows you to (relatively) easily
 run services in isolated containers on cheap hosts. So far the repo contains
 docker files for:
 
-* http://pump.io/ - federated social network
+* http://owncloud.org - online file storage  / dropbox replacement + calendar
+  + contacts + tasks etc
 * http://roundcube.net - webmail client
-* http://owncloud.org - online file storage  / dropbox replacement
+* http://pump.io/ - federated social network
 
 Feel free to raise a ticket if there's anything else you'd particularly like
 to see dockerized.
@@ -54,9 +55,10 @@ Running your image
 
 ::
 
-    docker run -p 8000:80 roundcube
+    docker run -p 8000:80 -d roundcube
 
-The -p argument means "redirect port 8000 on the host to port 80 in the container".
+The -p argument means "redirect port 8000 on the host to port 80 in the
+container". The -d means "run detached", ie. as a daemon in the background.
 
 You should now be able to access roundcube at http://localhost:8000/roundcube/
 
@@ -66,6 +68,22 @@ Is that it?
 
 That's all you need to get a working docker image. To be actually useful,
 unfortunately there's some other stuff you'll need to do.
+
+Persistent data
+###############
+
+Docker's design is such that if you stop an image and run it again, your new
+container will lose any changes that happened during the previous run. That's
+potentially a big problem. To avoid that happening, make folders on your host
+for anything you don't want to lose between runs and tell docker to bind mount
+them when you run your images. For example, to persist owncloud's config and
+data directories, do something like:
+
+::
+
+    mkdir -p /dockerdata/owncloud/config /dockerdata/owncloud/data
+    docker run -v /dockerdata/owncloud/config:/var/www/owncloud/config -v /dockerdata/owncloud/data:/var/www/owncloud/data -p 8001:80 -d owncloud
+
 
 
 Configuration
